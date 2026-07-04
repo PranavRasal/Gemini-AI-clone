@@ -24,4 +24,3 @@ const threadSchema = new mongoose.Schema({
 
 
 export const Thread =  mongoose.model('Thread', threadSchema) ;
-export const Message = mongoose.model('Message', messageSchema) ;

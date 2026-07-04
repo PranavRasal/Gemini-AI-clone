@@ -2,33 +2,36 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+// import connect from './Database/index.js';
 import mongoose from 'mongoose';
-import dns from "dns";
+import chatRoutes from './routes/chat.js';
 
+import dns from "dns";
 dotenv.config({
     path : './.env'
 });
-dns.setServers(["1.1.1.1","8.8.8.8"]);
-
-const app = express();
-const PORT = 7777;
-app.use(cors());
-app.use(express.json());
-
+    dns.setServers(["1.1.1.1","8.8.8.8"]);
     const connect = async () => {
         try {
             await mongoose.connect(process.env.MONGODB_URI);
             console.log('Connected to MongoDB');
         } catch (error) {
-            console.error('Error connecting to MongoDB:', error);
-            process.exit(1);
+            console.warn('MongoDB connection failed, continuing with in-memory thread storage:', error.message);
         }
     };
 
-    app.listen(PORT, () => {
+    
+const app = express();
+const PORT = 7777;
+app.use(cors());
+app.use(express.json());
+
+    app.listen(PORT, async() => {
         console.log(`Server is running on port ${PORT}`);
-       connect();
+       await connect();
     });
+
+    app.use('/api/chats', chatRoutes);
 
 
 // import {GoogleGenAI} from '@google/genai';
