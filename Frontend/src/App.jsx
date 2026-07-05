@@ -10,6 +10,7 @@ function App() {
     <div >
       <MyContext.Provider value={providerValue}>
         <SideBar />
+        <ChatWindow/>
       </MyContext.Provider>
     </div>
   )
