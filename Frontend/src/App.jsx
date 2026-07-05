@@ -7,7 +7,7 @@ function App() {
   const providerValue ={} ;
 
   return (
-    <div >
+    <div className=' w-screen min-h-screen bg-[#212121] flex' style={{ fontFamily: 'Roboto, sans-serif' }}>
       <MyContext.Provider value={providerValue}>
         <SideBar />
         <ChatWindow/>
