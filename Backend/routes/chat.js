@@ -6,7 +6,8 @@ const router = express.Router();
 
 // Create or add  thread and replay
 router.post('/threads', async (req, res) => {
-     const { Id , messages } = req.body;
+    const { Id, id, messages } = req.body;
+    const threadId = Id ?? id;
      try{
         
         if(!messages){
@@ -14,7 +15,7 @@ router.post('/threads', async (req, res) => {
         }
 
         // If no Id provided, create a new thread and return it
-        if(!Id){
+        if(!threadId){
             const newThread = new Thread({ title: messages, messages: [
                 { role: 'user', content: messages }
             ] });
@@ -31,7 +32,7 @@ router.post('/threads', async (req, res) => {
         }
 
         // Id provided: append to existing thread
-        const existingThread = await Thread.findById(Id);
+        const existingThread = await Thread.findById(threadId);
         if(!existingThread){
             return res.status(404).json({ message: 'Thread not found.' });
         }
