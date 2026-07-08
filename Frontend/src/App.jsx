@@ -8,14 +8,19 @@ function App() {
   const [prompt, setPrompt] = useState("")
   const [reply, setReply] = useState([]);
   const [id, setId] = useState(null);
+  const [preChat, setPreChat] = useState([]);
+  const[newChat, setNewChat] = useState(false);
+
   const providerValue ={
     prompt, setPrompt,
     reply, setReply ,
-    id , setId
+    id , setId ,
+    preChat, setPreChat,
+    newChat, setNewChat
   } ;
 
   return (
-    <div className=' w-screen min-h-screen bg-[#212121] flex' style={{ fontFamily: 'Roboto, sans-serif' }}>
+    <div className='w-screen h-screen overflow-hidden bg-[#212121] flex' style={{ fontFamily: 'Roboto, sans-serif' }}>
       <MyContext.Provider value={providerValue}>
         <SideBar />
         <ChatWindow/>

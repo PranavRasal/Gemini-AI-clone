@@ -1,9 +1,11 @@
 import React, { useContext } from 'react'
 import Chat from './chat'
+import { DNA } from 'react-loader-spinner'
 import { MyContext } from '../MyContext'
 
 function chatWindow() {
   const { prompt, setPrompt, reply, setReply , id , setId } = useContext(MyContext);
+  const [loading, setLoading] = React.useState(false);
 
   const getReply = async () => {
     if (!prompt.trim()) {
@@ -21,6 +23,7 @@ function chatWindow() {
         })
       };
     try {
+      setLoading(true);
       const response = await fetch('http://localhost:7777/api/chats/threads', options);
       const res = await response.json();
       console.log('Response:', res);
@@ -32,57 +35,65 @@ function chatWindow() {
       const thread = res;
       setReply(thread.messages ?? []);
       setId(thread._id ?? null);
-      setPrompt('');
     } catch (error) {
       console.error('Error fetching reply:', error);
+    } finally {
+      setLoading(false);
     }
   }
 
 
   return (
-    <div className='w-4/5 bg-[#212121] text-white p-4 flex flex-col'>
-
-
-    <div className='w-4/4 bg-[#212121] text-white flex  flex-col'>
-      <div className='flex w-full items-center justify-between bg-[#333] text-white p-4 border rounded-2xl  border-[#555]'>
-        <div className='flex items-center text-xl space-x-2'>
+    <div className='flex h-full min-w-0 flex-1 flex-col gap-4 bg-[#212121] p-4 text-white overflow-hidden'>
+      <div className='flex shrink-0 items-center justify-between rounded-2xl border border-[#555] bg-[#333] p-4 text-white'>
+        <div className='flex items-center space-x-2 text-xl'>
           <span>Gemini AI</span>
           <i className='fa-solid fa-caret-down'></i>
         </div>
-        <div className='flex text-2xl items-center'>
+        <div className='flex items-center text-2xl'>
           <i className='fa-solid fa-circle-user'></i>
         </div>
       </div>
-    </div>
 
-    <Chat />
+      <div className='flex min-h-0 flex-1 flex-col overflow-hidden'>
+        <Chat />
+        <div className='flex shrink-0 items-center justify-center py-4'>
+          <DNA
+            visible={loading}
+            height="80"
+            width="80"
+            ariaLabel="dna-loading"
+            wrapperStyle={{}}
+            wrapperClass="dna-wrapper"
+          />
+        </div>
 
-    <div className='w-3/4 flex ml-35 items-center justify-between text-white p-2 border border-[#555] rounded-4xl mt-auto '>
-      <input
-        type='text'
-        placeholder='Ask anything...'
-        className='w-full bg-[#212121] text-white py-2 px-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 mr-2'
-        value={prompt}
-        onChange={(e) => setPrompt(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            getReply();
-          }
-        }}
-      />
-       
-      <button className='ml-2  text-white py-2 px-4 rounded-2xl hover:bg-[#777]'
-        onClick={getReply}
-      >
-       
-     <i className="fa-regular fa-paper-plane"></i>
-      </button>
-      
-    </div>
-    <div className=' ml-90 bg-[#212121] text-white flex flex-col mt-2'>
-      <h2>Gemini AI can make mistakes , Last updated this AI on June 10, 2024 </h2>
-    </div>
-    
+        <div className='flex shrink-0 items-center justify-between rounded-3xl border border-[#555] bg-[#212121] p-2 text-white'>
+          <input
+            type='text'
+            placeholder='Ask anything...'
+            className='w-full bg-transparent py-2 px-4 text-white focus:outline-none'
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                getReply();
+              }
+            }}
+          />
+
+          <button
+            className='ml-2 rounded-2xl px-4 py-2 text-white hover:bg-[#777]'
+            onClick={getReply}
+          >
+            <i className="fa-regular fa-paper-plane"></i>
+          </button>
+        </div>
+
+        <div className='shrink-0 pt-2 ml-90 text-sm text-[#aaa]'>
+          Gemini AI can make mistakes, last updated this AI on June 10, 2024.
+        </div>
+      </div>
     </div>
   )
 }
