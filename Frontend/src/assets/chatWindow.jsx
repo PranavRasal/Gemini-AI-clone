@@ -2,7 +2,6 @@ import React, { useContext } from 'react'
 import Chat from './chat'
 import { DNA } from 'react-loader-spinner'
 import { MyContext } from '../MyContext'
-import { API_BASE } from '../apiBase'
 
 function chatWindow() {
   const { prompt, setPrompt, reply, setReply , id , setId } = useContext(MyContext);
@@ -25,7 +24,7 @@ function chatWindow() {
       };
     try {
       setLoading(true);
-      const response = await fetch(`${API_BASE}/chats/threads`, options);
+      const response = await fetch('http://localhost:7777/api/chats/threads', options);
       const res = await response.json();
       console.log('Response:', res);
 
