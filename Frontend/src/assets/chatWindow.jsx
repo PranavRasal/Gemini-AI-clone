@@ -33,6 +33,7 @@ function chatWindow() {
       }
 
       const thread = res;
+      setPrompt('');
       setReply(thread.messages ?? []);
       setId(thread._id ?? null);
     } catch (error) {
@@ -79,6 +80,7 @@ function chatWindow() {
               if (e.key === 'Enter') {
                 getReply();
               }
+              
             }}
           />
 
