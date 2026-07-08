@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { MyContext } from '../MyContext'
+import { API_BASE } from '../apiBase'
 
 function SideBar() {
   const { id, setReply, setId } = useContext(MyContext);
@@ -7,7 +8,7 @@ function SideBar() {
 
   const fetchThreads = async () => {
     try {
-      const response = await fetch('http://localhost:7777/api/chats/all-threads');
+      const response = await fetch(`${API_BASE}/chats/all-threads`);
       const data = await response.json();
 
       if (!response.ok) {
@@ -32,7 +33,7 @@ function SideBar() {
 
   const loadThreadMessages = async (threadId) => {
     try {
-      const response = await fetch(`http://localhost:7777/api/chats/threads/${threadId}`);
+      const response = await fetch(`${API_BASE}/chats/threads/${threadId}`);
       const data = await response.json();
 
       if (!response.ok) {
@@ -48,7 +49,7 @@ function SideBar() {
 
   const deleteThread = async (threadId) => {
     try {
-      const response = await fetch(`http://localhost:7777/api/chats/threads/${threadId}`, {
+      const response = await fetch(`${API_BASE}/chats/threads/${threadId}`, {
         method: 'DELETE'
       });
       const data = await response.json();
