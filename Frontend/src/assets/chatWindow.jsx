@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
-import Chat from '../../Frontend/src/assets/chat'
+import Chat from './chat'
 import { DNA } from 'react-loader-spinner'
-import { MyContext } from '../../Frontend/src/MyContext'
+import { MyContext } from '../MyContext'
 
 function chatWindow() {
   const { prompt, setPrompt, reply, setReply , id , setId } = useContext(MyContext);
