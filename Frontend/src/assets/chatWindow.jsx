@@ -24,7 +24,7 @@ function chatWindow() {
       };
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:7777/api/chats/threads', options);
+      const response = await fetch('https://gemini-ai-clone-teal.vercel.app/api/chats/threads', options);
       const res = await response.json();
       console.log('Response:', res);
 

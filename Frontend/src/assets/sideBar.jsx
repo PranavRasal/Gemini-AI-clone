@@ -7,7 +7,7 @@ function SideBar() {
 
   const fetchThreads = async () => {
     try {
-      const response = await fetch('http://localhost:7777/api/chats/all-threads');
+      const response = await fetch('https://gemini-ai-clone-teal.vercel.app/api/chats/all-threads');
       const data = await response.json();
 
       if (!response.ok) {
@@ -32,7 +32,7 @@ function SideBar() {
 
   const loadThreadMessages = async (threadId) => {
     try {
-      const response = await fetch(`http://localhost:7777/api/chats/threads/${threadId}`);
+      const response = await fetch(`https://gemini-ai-clone-teal.vercel.app/api/chats/threads/${threadId}`);
       const data = await response.json();
 
       if (!response.ok) {
@@ -48,7 +48,7 @@ function SideBar() {
 
   const deleteThread = async (threadId) => {
     try {
-      const response = await fetch(`http://localhost:7777/api/chats/threads/${threadId}`, {
+      const response = await fetch(`https://gemini-ai-clone-teal.vercel.app/api/chats/threads/${threadId}`, {
         method: 'DELETE'
       });
       const data = await response.json();
