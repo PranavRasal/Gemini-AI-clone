@@ -22,7 +22,8 @@ dotenv.config({
 
     
 const app = express();
-const PORT = 7777;
+app.use(express.static('public'));
+const PORT = process.env.PORT ;
 app.use(cors());
 app.use(express.json());
 
