@@ -31,16 +31,15 @@ app.use(express.static(publicDir));
 app.get('/', (req, res) => {
     res.sendFile(path.join(publicDir, 'index.html'));
 });
-const PORT = process.env.PORT || 7777;
+const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
+app.use('/api/chats', chatRoutes);
 
-    app.listen(PORT, async() => {
-        console.log(`Server is running on port ${PORT}`);
-       await connect();
-    });
-
-    app.use('/api/chats', chatRoutes);
+app.listen(PORT, async() => {
+    console.log(`Server is running on port ${PORT}`);
+    await connect();
+});
 
 
 // import {GoogleGenAI} from '@google/genai';
