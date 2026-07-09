@@ -5,14 +5,10 @@ import dotenv from 'dotenv';
 // import connect from './Database/index.js';
 import mongoose from 'mongoose';
 import chatRoutes from './routes/chat.js';
-import path from 'path';
-import { fileURLToPath } from 'url';
 
 import dns from "dns";
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 dotenv.config({
-    path : path.join(__dirname, '.env')
+    path : './.env'
 });
     dns.setServers(["1.1.1.1","8.8.8.8"]);
     const connect = async () => {
@@ -26,12 +22,7 @@ dotenv.config({
 
     
 const app = express();
-const publicDir = path.join(__dirname, 'public');
-app.use(express.static(publicDir));
-app.get('/', (req, res) => {
-    res.sendFile(path.join(publicDir, 'index.html'));
-});
-const PORT = process.env.PORT || 7777;
+const PORT = 7777;
 app.use(cors());
 app.use(express.json());
 
