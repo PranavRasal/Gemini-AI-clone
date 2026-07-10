@@ -27,13 +27,6 @@ const PORT = process.env.PORT || 7777;
 app.use(cors());
 app.use(express.json());
 
-app.get('/', (req, res) => {
-    res.status(200).json({
-        message: 'Gemini AI backend is running',
-        routes: ['/api/chats/all-threads', '/api/chats/threads', '/api/chats/threads/:threadId']
-    });
-});
-
 app.use('/api/chats', chatRoutes);
 
 if (process.env.VERCEL !== '1') {
