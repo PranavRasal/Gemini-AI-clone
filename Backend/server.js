@@ -23,22 +23,16 @@ dotenv.config({
     
 const app = express();
 app.use(express.static('public'));
-const PORT = process.env.PORT || 7777;
+const PORT = process.env.PORT ;
 app.use(cors());
 app.use(express.json());
 
-app.use('/api/chats', chatRoutes);
-
-if (process.env.VERCEL !== '1') {
     app.listen(PORT, async() => {
         console.log(`Server is running on port ${PORT}`);
        await connect();
     });
-} else {
-    connect();
-}
 
-export default app;
+    app.use('/api/chats', chatRoutes);
 
 
 // import {GoogleGenAI} from '@google/genai';
